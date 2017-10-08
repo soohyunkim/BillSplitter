@@ -118,10 +118,10 @@ class App extends React.Component {
     return (
       <div>
         <h2> Bill Splitter </h2>
-        Type in People's names, followed by an enter key.<br />
+        Enter one name at a time.<br />
         <InputBox onkey={this.addName} /><br />
         {this.state.name.map((num, i) => <NameBox key={i} text={num} showShare={true} />)}<br />
-        Type in food items to be split, followed by an enter key.<br />
+        Enter one food item at a time.<br />
         <InputBox onkey={this.addFood} data={this.state.food} /><br /><br />
         {this.state.food.map((f, i) => <Food price={this.addPrice} addPerson={this.addPerson} key={i} foodItem={f} people={this.state.name} />)}
       </div>
