@@ -1,0 +1,18 @@
+.inputBox {
+  padding: 7px;
+  border: #CCC 1px solid;
+  border-radius: 3px;
+}
+
+.nameBox {
+  padding: 5px;
+  background: blue;
+  color: #FFF;
+  margin: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.selected {
+  background: blueviolet;
+}
