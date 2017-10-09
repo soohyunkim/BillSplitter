@@ -11,6 +11,7 @@ var calculate = (state) => {
   for (let key in p)
     if (p.hasOwnProperty(key) && p !== null) {
       var x = p[key].people;
+      p[key].people.num = num;
       var base = parseFloat(p[key].price / x.length).toFixed(2);
       for (let k in x)
         if (x.hasOwnProperty(k) && x !== null)
@@ -41,7 +42,7 @@ class App extends React.Component {
 
   addName(e) {
     if (e.keyCode === 13) {
-      var arr = { num: e.target.value, id: this.nameid, share: '0' };
+      var arr = { num: e.target.value, id: this.nameid, share: 0 };
       this.nameid++;
       this.setState({ name: this.state['name'].concat(arr) }, () => {
         this.setState({ name: calculate(this.state) });
@@ -63,7 +64,7 @@ class App extends React.Component {
 
   addPrice(e) {
     if (e.keyCode === 13) {
-      var food = e.target.getAttribute('data-foodID');
+      var food = e.target.getAttribute('fid');
       var p = this.state['food'];
 
       for (let key in p)
@@ -78,8 +79,8 @@ class App extends React.Component {
   }
 
   addPerson(e) {
-    var food = e.target.getAttribute('data-foodID');
-    var person = e.target.getAttribute('data-pid');
+    var food = e.target.getAttribute('fid');
+    var person = e.target.getAttribute('pid');
     var p = this.state['food'];
     var foodObj = {
       name: this.state.name,
@@ -142,10 +143,10 @@ class Food extends React.Component {
     return (
       <div className='foodClass'>
         <div className='foodObject'>
-          <span>ITEM {this.props.foodItem.id}: {this.props.foodItem.num}</span> costs <input className='inputBox' onKeyUp={this.props.price} placeholder='Enter Price' data-foodID={this.props.foodItem.id} />
+          <span>ITEM {this.props.foodItem.id}: {this.props.foodItem.num}</span> costs <input className='inputBox' onKeyUp={this.props.price} placeholder='Enter Price' fid={this.props.foodItem.id} />
         </div>
         Click the name of the people who will be splitting costs for this item:
-        {this.props.people.map((num, i) => <NameBox add={this.props.addPerson} foodID={this.props.foodItem.id} key={i} text={num} />)}
+        {this.props.people.map((num, i) => <NameBox add={this.props.addPerson} fid={this.props.foodItem.id} key={i} text={num} />)}
       </div>
     );
   }
@@ -154,7 +155,7 @@ class Food extends React.Component {
 class NameBox extends React.Component {
   render() {
     return (
-      <span className='nameBox' onClick={this.props.add} data-foodID={this.props.foodID} data-pid={this.props.text.id}>
+      <span className='nameBox' onClick={this.props.add} fid={this.props.fid} pid={this.props.text.id}>
         {this.props.text.num} {this.props.showShare ? ': $ ' + this.props.text.share : ''}
       </span>
     );
